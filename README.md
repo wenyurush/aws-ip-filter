@@ -1,4 +1,4 @@
-```markdown
+
 # AWS IP Range Filter (Cloudflare Worker)
 
 🚀 **AWS IP Range Filter** 是一个部署在 Cloudflare Workers 上的轻量级工具。它提供了一个**极速的 Web 图形界面**和一个**强大的 REST API**，用于快速筛选、搜索和提取 AWS 的 IP 地址段（按地区、服务类型、IPv4/IPv6 等）。
@@ -115,4 +115,3 @@ MIT License. 随意修改和分发。
 
 ---
 *AWS 是 Amazon.com, Inc. 或其附属公司的商标。本工具与 AWS 官方无关。*
-```
