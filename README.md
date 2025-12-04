@@ -1,3 +1,4 @@
+```markdown
 # AWS IP Range Filter (Cloudflare Worker)
 
 🚀 **AWS IP Range Filter** 是一个部署在 Cloudflare Workers 上的轻量级工具。它提供了一个**极速的 Web 图形界面**和一个**强大的 REST API**，用于快速筛选、搜索和提取 AWS 的 IP 地址段（按地区、服务类型、IPv4/IPv6 等）。
@@ -60,3 +61,58 @@
 你可以通过 URL 参数直接获取筛选后的数据。
 
 ### 基本格式
+
+```
+GET https://<your-worker-domain>/?<parameters>
+```
+
+### 参数说明
+
+| 参数 | 说明 | 示例值 |
+| :--- | :--- | :--- |
+| `region` | AWS 地区代码，支持逗号分隔多个 | `us-east-1`, `ap-northeast-1,eu-west-1` |
+| `service` | AWS 服务代码，支持逗号分隔多个 | `EC2`, `S3`, `CLOUDFRONT` |
+| `format` | 输出格式 | `json` (默认), `text` (纯文本 CIDR) |
+| `ipv` | IP 版本筛选 | `all` (默认), `v4`, `v6` |
+
+### 常见场景示例
+
+#### 1. 获取 CloudFront 所有 IP 做白名单 (纯文本)
+适合直接用于 Nginx 配置或防火墙规则。
+```bash
+curl "https://your-worker.dev/?service=CLOUDFRONT&format=text"
+```
+**输出:**
+```text
+144.220.0.0/16
+52.124.128.0/17
+...
+```
+
+#### 2. 获取日本东京 (ap-northeast-1) 的 EC2 详情 (JSON)
+```bash
+curl "https://your-worker.dev/?region=ap-northeast-1&service=EC2&format=json"
+```
+
+#### 3. 获取 S3 和 DynamoDB 在美东和美西的 IPv4 地址
+```bash
+curl "https://your-worker.dev/?region=us-east-1,us-west-1&service=S3,DYNAMODB&ipv=v4&format=text"
+```
+
+## 💻 本地开发
+
+虽然这是一个 Worker 脚本，你也可以使用 Wrangler 在本地模拟运行：
+
+```bash
+# 启动本地开发服务器
+wrangler dev worker.js
+```
+访问 `http://localhost:8787` 即可看到界面。
+
+## 📝 License
+
+MIT License. 随意修改和分发。
+
+---
+*AWS 是 Amazon.com, Inc. 或其附属公司的商标。本工具与 AWS 官方无关。*
+```
